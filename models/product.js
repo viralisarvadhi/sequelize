@@ -30,7 +30,7 @@ Product.init(
         },
     },
     {
-        sequelize,        // 🔥 reuse connection
+        sequelize,
         modelName: "Product",
         tableName: "Products",
     }

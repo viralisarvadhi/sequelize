@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
         host: "localhost",
         dialect: "postgres",
         port: 5432,
-        logging: console.log, // give the log of query that perfrom if we write false that dont show and logging default parameter is console.log
+        logging: false, // give the log of query that perfrom if we write false that dont show and logging default parameter is console.log
     }
 );
 module.exports = sequelize;
