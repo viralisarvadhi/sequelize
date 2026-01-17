@@ -1,0 +1,42 @@
+const sequelize = require("./db");
+const User = require("./models/User");
+const product = require("./models/product");
+
+
+
+(async () => {
+    try {
+        await sequelize.authenticate();
+        console.log("PostgreSQL connected successfully!");
+
+        await sequelize.sync(); //check the model is created and syned
+        console.log("model synced");
+
+        /* const product = Product.build({
+      name: "Laptop",
+      price: 50000,
+    });
+
+    console.log(" Price with tax:", product.getPriceWithTax());
+
+    await product.save();
+    console.log(" Product saved:", product.toJSON());*/ //syntax for creating instance
+        //like mailny used .build() and .save()
+
+        process.exit(0);
+
+    } catch (error) {
+        console.error(" Unable to connect:", error);
+        process.exit(1);
+    }
+})();
+;//getting output like this
+/*sarvadhisolution@Sarvadhis-MacBook-Pro sequelize % node index.js
+true
+Executing (default): SELECT 1+1 AS result
+PostgreSQL connected successfully!
+Executing (default): SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'Users'
+Executing (default): CREATE TABLE IF NOT EXISTS "Users" ("id"   SERIAL , "name" VARCHAR(255) NOT NULL, "lastname" VARCHAR(255), "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL, "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL, PRIMARY KEY ("id"));
+Executing (default): SELECT i.relname AS name, ix.indisprimary AS primary, ix.indisunique AS unique, ix.indkey AS indkey, array_agg(a.attnum) as column_indexes, array_agg(a.attname) AS column_names, pg_get_indexdef(ix.indexrelid) AS definition FROM pg_class t, pg_class i, pg_index ix, pg_attribute a WHERE t.oid = ix.indrelid AND i.oid = ix.indexrelid AND a.attrelid = t.oid AND t.relkind = 'r' and t.relname = 'Users' GROUP BY i.relname, ix.indexrelid, ix.indisprimary, ix.indisunique, ix.indkey ORDER BY i.relname;
+model synced*/ 
+//we get all executing query becase logging added console.log
