@@ -18,7 +18,7 @@ require("./models/associations");
     console.log("PostgreSQL connected successfully!");
     // console.log(Object.keys(sequelize.models));
 
-    await sequelize.sync({ alter: true }); // sync the model with database as a table
+    await sequelize.sync(); // sync the model with database as a table
     console.log("model synced");
 
     // Find all users
