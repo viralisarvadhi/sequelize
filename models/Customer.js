@@ -29,5 +29,10 @@ Customer.init(
 /*Customer.hasMany(Product, {
     foreignKey: "customerId",
 });*/
-
+/*hooks: {
+     beforeCreate(customer) {
+       // this runs BEFORE INSERT query
+       customer.email = customer.email.toLowerCase();
+     },
+   },*/
 module.exports = Customer;
