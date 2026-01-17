@@ -1,5 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../db");
+//const Customer = require("./Customer");
+
 
 class Product extends Model {
     // class-level method see by the static keyword 
@@ -35,5 +37,9 @@ Product.init(
         tableName: "Products",
     }
 );
+// association
+/*Product.belongsTo(Customer, {
+    foreignKey: "customerId",
+});*/
 
 module.exports = Product;
