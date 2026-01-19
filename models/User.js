@@ -1,25 +1,31 @@
-const { DataTypes } = require("sequelize")//datatype that we are using for entity declaration
+'use strict';
 
-const sequelize = require("../db"); //getting the value of the postgres connection 
+module.exports = (sequelize, DataTypes) => {
+    const User = sequelize.define(
+        'User',
+        {
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
 
-const User = sequelize.define("User", {
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true, // adding constarint
-        validate: {
-            isAlpha: true,  // validator that chceck name contain only letters a–z
-            len: [3, 20],   // validator that check the lenth between 3 to 20
+            name: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
 
-
+            email: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                unique: true
+            }
         },
-    },
+        {
+            tableName: 'users',
+            timestamps: true
+        }
+    );
 
-    lastname: {
-        type: DataTypes.STRING,
-        //allowNull: false,
-    },
-});
-console.log(User === sequelize.models.User); // true
-module.exports = User;
-
+    return User;
+};

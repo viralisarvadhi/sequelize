@@ -1,38 +1,29 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../db");
-//const Product = require("./Product");
+'use strict';
 
-class Customer extends Model { }
+module.exports = (sequelize, DataTypes) => {
+    const Customer = sequelize.define(
+        'Customer',
+        {
+            id: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
+            name: DataTypes.STRING,
+            email: DataTypes.STRING
+        },
+        {
+            tableName: 'customers',
+            timestamps: true
+        }
+    );
 
-Customer.init(
-    {
-        firstName: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        lastName: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-    },
-    {
-        sequelize,
-        modelName: "Customer",
-        tableName: "Customers",
-    }
-);
-// association
-/*Customer.hasMany(Product, {
-    foreignKey: "customerId",
-});*/
-/*hooks: {
-     beforeCreate(customer) {
-       // this runs BEFORE INSERT query
-       customer.email = customer.email.toLowerCase();
-     },
-   },*/
-module.exports = Customer;
+    Customer.associate = (models) => {
+        Customer.hasMany(models.Order, {
+            foreignKey: 'customer_id',
+            as: 'orders'
+        });
+    };
+
+    return Customer;
+};

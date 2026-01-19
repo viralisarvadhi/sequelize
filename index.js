@@ -1,61 +1,41 @@
-const sequelize = require("./db");
+'use strict';
 
-// importing models correctly
-const User = require("./models/User");
-const Product = require("./models/Product");
-
-// registering models (optional but safe)
-require("./models/User");
-require("./models/Product");
-require("./models/Customer");
-require("./models/associations");
-
+// import all models & sequelize from index.js
+const { sequelize, User, Product } = require('./models');
 
 (async () => {
   try {
-    await sequelize.authenticate(); // TO CHECK THE CONNECTION IS ESTABLISHED OR NOT
-    // the working of authenticate
-    console.log("PostgreSQL connected successfully!");
-    // console.log(Object.keys(sequelize.models));
+    // 1️⃣ Check DB connection
+    await sequelize.authenticate();
+    console.log('PostgreSQL connected successfully!');
 
-    await sequelize.sync(); // sync the model with database as a table
-    console.log("model synced");
+    // ❌ DO NOT USE sequelize.sync()
+    // await sequelize.sync();
 
-    // Find all users
+    // 2️⃣ Fetch all users
     const users = await User.findAll();
     console.log(users.every(user => user instanceof User)); // true
-    console.log("All users:", JSON.stringify(users, null, 2));
+    console.log('All users:', JSON.stringify(users, null, 2));
 
+    // 3️⃣ Find one user
     const user1 = await User.findOne({
-      where: {
-        name: "vir",
-      },
+      where: { name: 'vir' }
     });
 
-    console.log(user1 ? user1.toJSON() : "No user found");
+    console.log(user1 ? user1.toJSON() : 'No user found');
 
-    /*
-    const product = Product.build({ // insert query first build
-      name: "Laptop",
-      price: 50000,
-    });
-
-    await product.save(); // then save
-    console.log("product saved:", product.toJSON());
-    */
-
+    // 4️⃣ Fetch products (ordered + limit)
     const products = await Product.findAll({
-      order: [["price", "ASC"]],
-      limit: 2,
+      order: [['price', 'ASC']],
+      limit: 2
     });
 
-    console.log("Products (ordered):", products.map(p => p.toJSON()));
-
-
-
-
+    console.log(
+      'Products (ordered):',
+      products.map(p => p.toJSON())
+    );
 
   } catch (error) {
-    console.error("Unable to connect:", error);
+    console.error('Unable to connect:', error);
   }
 })();

@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "sarvadhisolution",
+    "password": null,
+    "database": "postgres",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "sarvadhisolution",
+    "password": null,
+    "database": "postgres",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "sarvadhisolution",
+    "password": null,
+    "database": "postgres",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
